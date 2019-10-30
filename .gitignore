@@ -1,0 +1,6 @@
+# Virtualenv
+.env
+.venv*
+src/*
+*.sqlite
+*.sqlite3
