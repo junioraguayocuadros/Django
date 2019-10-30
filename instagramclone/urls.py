@@ -1,11 +1,7 @@
 from django.urls import path
-from django.http import HttpResponse
-
-
-def hello_world(request):
-    return HttpResponse('Hello, world!')
-
+from instagramclone import views
 
 urlpatterns = [
-    path('hello-world/', hello_world)
+    path('hello-world/', views.hello_world),
+    path('hi/', views.hi)
 ]
