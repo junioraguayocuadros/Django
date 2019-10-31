@@ -9,7 +9,7 @@ def hello_world(request):
     return HttpResponse('Hello, world!, Current server time is {now}'.format(now=str(now)))
 
 
-def hi(request):
+def sorted_integers(request):
     numbers = [int(i) for i in request.GET['numbers'].split(',')]
     sorted_ints = sorted(numbers)
     data = {
@@ -18,3 +18,12 @@ def hi(request):
         'message': 'Integers sorted successfully.'
     }
     return HttpResponse(json.dumps(data, indent=4), content_type='application/json')
+
+
+def say_hi(request, name, age):
+    if age < 12:
+        message = 'Sorry {}, you are not allowed here'.format(name)
+    else:
+        message = 'Hello, {}! Welcome to InstagramClone'.format(name)
+    return HttpResponse(message)
+
