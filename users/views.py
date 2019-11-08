@@ -1,6 +1,11 @@
+from django.db import IntegrityError
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+
+from django.contrib.auth.models import User
+
+from users.models import Profile
 
 
 def login_view(request):
@@ -19,6 +24,29 @@ def login_view(request):
 
 
 def signup_view(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        passwd = request.POST['passwd']
+        passwd_confimation = request.POST['passwd_confirmation']
+
+        if passwd != passwd_confimation:
+            return render(request, 'users/signup.html', {'error': 'Password confirmation does not match'})
+
+        try:
+            user = User.objects.create_user(username=username, password=passwd)
+        except IntegrityError:
+            return render(request, 'users/signup.html', {'error': 'Username is already in user'})
+
+        user.first_name = request.POST['first_name']
+        user.last_name = request.POST['last_name']
+        user.email = request.POST['email']
+        user.save()
+
+        profile = Profile(user=user)
+        profile.save()
+
+        return redirect('login')
+
     return render(request, 'users/signup.html')
 
 @login_required
