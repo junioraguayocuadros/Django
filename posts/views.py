@@ -2,6 +2,8 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from datetime import datetime
 from posts.forms import PostForm
+from posts.models import Post
+
 posts = [
     {
         'title': 'Mont Blanc',
@@ -35,6 +37,7 @@ posts = [
 
 @login_required
 def list_post(request):
+    posts = Post.objects.all().order_by('-created')
     return render(request, 'posts/feed.html', {'posts': posts})
 
 
