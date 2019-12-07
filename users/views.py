@@ -1,13 +1,17 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
-from django.views.generic import TemplateView
+from django.views.generic import DetailView
 
 from users.forms import ProfileForm, SignupForm
 
 
-class UserDetailView(TemplateView):
+class UserDetailView(DetailView):
     template_name = 'users/detail.html'
+    slug_field = 'username'
+    slug_url_kwarg = 'username'
+    queryset = User.objects.all()
 
 @login_required
 def update_profile(request):
