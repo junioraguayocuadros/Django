@@ -55,9 +55,14 @@ def signup_view(request):
         if form.is_valid():
             form.save()
             return redirect('login')
-        else:
-            form = SignupForm()
-        return render(request=request, template_name='users/signup.html', context={'form': form})
+    else:
+        form = SignupForm()
+
+    return render(
+        request=request,
+        template_name='users/signup.html',
+        context={'form': form}
+    )
 
 
 @login_required
