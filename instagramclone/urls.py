@@ -4,7 +4,7 @@ from django.urls import path
 from django.contrib import admin
 from instagramclone import views as local_views
 from posts import views as posts_views
-from users import  views as users_views
+from users import views as users_views
 
 urlpatterns = [
 
