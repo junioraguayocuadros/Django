@@ -4,7 +4,13 @@ from datetime import datetime
 from posts.forms import PostForm
 from posts.models import Post
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
+
+
+class PostDetailView(LoginRequiredMixin, DetailView):
+    template_name = 'posts/detail.html'
+    queryset = Post.objects.all()
+    context_object_name = 'posts'
 
 
 class PostFeedView(LoginRequiredMixin, ListView):
@@ -13,6 +19,7 @@ class PostFeedView(LoginRequiredMixin, ListView):
     ordering = ('-created',)
     paginate_by = 2
     context_object_name = 'posts'
+
 
 @login_required
 def create_post(request):
